@@ -16,6 +16,7 @@ default_config = {
     "redis": {
         "host": "localhost",
         "port": 6379,
+        "password": None,
         "database": 0
     },
     "safety_threshold": 10,
@@ -45,7 +46,7 @@ try:
     if "redis" not in config:
         raise RequestsRespectfulConfigError("'redis' key is missing from 'requests-respectful.config.yml'")
 
-    expected_redis_keys = ["host", "port", "database"]
+    expected_redis_keys = ["host", "port", "password", "database"]
     missing_redis_keys = list()
 
     for expected_redis_key in expected_redis_keys:
@@ -67,5 +68,6 @@ except FileNotFoundError:
 redis = StrictRedis(
     host=config["redis"]["host"],
     port=config["redis"]["port"],
+    password=config["redis"]["password"],
     db=config["redis"]["database"]
 )
